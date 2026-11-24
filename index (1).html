@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dwell Residences | Cantonments, Accra</title>
+<style>
+  :root {
+    --ink: #111418;
+    --stone: #f3f1ed;
+    --paper: #ffffff;
+    --gold: #b8912f;
+    --gold-soft: #d9b866;
+    --muted: #5d6268;
+    --line: rgba(17, 20, 24, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .container { width: min(1180px, 92%); margin: 0 auto; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  h1, h2, h3 { font-weight: 300; letter-spacing: -0.01em; line-height: 1.15; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.25rem; }
+
+  .btn {
+    display: inline-block;
+    padding: 0.95rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+  }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover { background: #a07f25; }
+  .btn-ghost { border-color: rgba(255,255,255,0.7); color: #fff; }
+  .btn-ghost:hover { background: #fff; color: var(--ink); }
+
+  /* NAV */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 0;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  header.scrolled {
+    background: rgba(255,255,255,0.96);
+    box-shadow: 0 1px 0 var(--line);
+    backdrop-filter: blur(8px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-weight: 600; letter-spacing: 0.2em; font-size: 0.9rem; color: #fff; text-transform: uppercase; transition: color 0.3s; }
+  header.scrolled .brand { color: var(--ink); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    transition: color 0.3s;
+  }
+  header.scrolled .nav-links a { color: var(--ink); }
+  .nav-links a:hover { color: var(--gold-soft); }
+  header.scrolled .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    background: url("https://i.postimg.cc/T2m0nrwn/DWELL-3-floors-12.jpg") center / cover no-repeat;
+    color: #fff;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,12,15,0.25) 0%, rgba(10,12,15,0.35) 45%, rgba(10,12,15,0.9) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 6rem;
+    max-width: 720px;
+  }
+  .hero h1 { font-size: clamp(3rem, 7vw, 5.5rem); margin-bottom: 1.25rem; }
+  .hero h1 strong { font-weight: 600; }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.88); max-width: 540px; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* STATS BAR */
+  .stats {
+    background: var(--ink);
+    color: #fff;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .stat {
+    padding: 2.25rem 1rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-size: 2rem; font-weight: 300; color: var(--gold-soft); display: block; }
+  .stat .label { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+
+  /* INTRO */
+  .intro { padding: 7rem 0; }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .intro p { color: var(--muted); font-size: 1.05rem; margin-bottom: 1rem; }
+  .intro-image img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* AMENITIES */
+  .amenities { background: var(--stone); padding: 7rem 0; }
+  .amenities-head { text-align: center; max-width: 620px; margin: 0 auto 4rem; }
+  .amenities-head p { color: var(--muted); }
+  .amenity-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .amenity {
+    background: var(--paper);
+    padding: 2.5rem 2rem;
+    border-top: 2px solid var(--gold);
+  }
+  .amenity .icon {
+    width: 44px; height: 44px;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+  }
+  .amenity h3 { font-size: 1.35rem; margin-bottom: 0.75rem; font-weight: 400; }
+  .amenity p { color: var(--muted); font-size: 0.95rem; }
+
+  /* GALLERY */
+  .gallery { padding: 7rem 0; }
+  .gallery-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; gap: 2rem; flex-wrap: wrap; }
+  .gallery-head p { color: var(--muted); max-width: 380px; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.25rem;
+  }
+  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-grid .plans { background: var(--stone); }
+  .gallery-grid .plans img { object-fit: contain; height: auto; }
+
+  /* FINISHES */
+  .finishes { background: var(--ink); color: #fff; padding: 7rem 0; }
+  .finishes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .finishes p { color: rgba(255,255,255,0.72); margin-bottom: 1rem; }
+  .finishes ul { list-style: none; margin-top: 2rem; }
+  .finishes li {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .finishes li span:last-child { color: var(--gold-soft); }
+  .finishes-image img { width: 100%; height: 560px; object-fit: contain; background: #e8e6e1; }
+
+  /* LOCATION */
+  .location { padding: 7rem 0; }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .address-card {
+    background: var(--stone);
+    padding: 3rem;
+    border-left: 3px solid var(--gold);
+  }
+  .address-card h3 { font-size: 1.6rem; margin-bottom: 1rem; font-weight: 400; }
+  .address-card p { color: var(--muted); margin-bottom: 0.5rem; }
+  .address-card .sub { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-top: 1.5rem; }
+
+  /* CTA */
+  .cta {
+    position: relative;
+    padding: 8rem 0;
+    text-align: center;
+    background: url("https://i.postimg.cc/RCfdwcFc/DWELL-3-floors-3.jpg") center / cover no-repeat fixed;
+    color: #fff;
+  }
+  .cta::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: rgba(12,14,17,0.82);
+  }
+  .cta .container { position: relative; z-index: 1; }
+  .cta h2 { max-width: 700px; margin: 0 auto 1.25rem; }
+  .cta p { color: rgba(255,255,255,0.75); max-width: 520px; margin: 0 auto 2.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
+    padding: 3rem 0;
+    font-size: 0.85rem;
+  }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-inner strong { color: #fff; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .intro-grid, .finishes-grid, .location-grid, .gallery-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .amenity-grid { grid-template-columns: 1fr; }
+    .intro-image img, .finishes-image img { height: auto; }
+    .cta { background-attachment: scroll; }
+    .intro, .amenities, .gallery, .finishes, .location, .cta { padding: 5rem 0; }
+  }
+  @media (max-width: 540px) {
+    .hero-content { padding-bottom: 4rem; }
+    .hero-actions .btn { width: 100%; text-align: center; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<header id="top-bar">
+  <div class="container nav">
+    <a href="#" class="brand">Dwell Residences</a>
+    <ul class="nav-links">
+      <li><a href="#about">The Residences</a></li>
+      <li><a href="#amenities">Amenities</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#contact">Enquire</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-content">
+    <p class="eyebrow">Cantonments, Accra</p>
+    <h1>Dwell <strong>Residences</strong></h1>
+    <p>Excellent craftsmanship and functional elegance in one of Accra's most sought-after neighborhoods.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-gold">Enquire Now</a>
+      <a href="#gallery" class="btn btn-ghost">View Gallery</a>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><span class="num">7</span><span class="label">Lavish Homes</span></div>
+    <div class="stat"><span class="num">3</span><span class="label">Levels Each</span></div>
+    <div class="stat"><span class="num">Pool</span><span class="label">Private &amp; Communal</span></div>
+    <div class="stat"><span class="num">Gym</span><span class="label">On Site</span></div>
+  </div>
+</section>
+
+<section class="intro" id="about">
+  <div class="container intro-grid">
+    <div class="reveal">
+      <p class="eyebrow">The Residences</p>
+      <h2>An enclave designed for modern living</h2>
+      <p>Dwell Residences is a gated community of seven homes, each thoughtfully planned across three floors. Open living and dining spaces flow into a kitchen built for daily life and entertaining.</p>
+      <p>Upstairs, three bedrooms include a generous master suite, with a lounge and ironing area that keep the home running smoothly. A boys' quarters and powder room on the ground floor add everyday convenience.</p>
+    </div>
+    <div class="intro-image reveal">
+      <img src="https://i.postimg.cc/MZR51yTV/DWELL-3-floors-2.jpg" alt="Dwell Residences exterior rendering, floor plans and interior views">
+    </div>
+  </div>
+</section>
+
+<section class="amenities" id="amenities">
+  <div class="container">
+    <div class="amenities-head reveal">
+      <p class="eyebrow">Amenities</p>
+      <h2>Everything within your enclave</h2>
+      <p>Shared facilities designed for wellness, leisure and community, all within the gates.</p>
+    </div>
+    <div class="amenity-grid">
+      <div class="amenity reveal">
+        <h3>Communal Pool</h3>
+        <p>A refreshing place to unwind, set within landscaped surroundings and warm evening lighting.</p>
+      </div>
+      <div class="amenity reveal">
+        <h3>Fitness Gym</h3>
+        <p>Keep your routine at home with a communal gym built for every morning and every evening.</p>
+      </div>
+      <div class="amenity reveal">
+        <h3>Clubhouse</h3>
+        <p>A shared space for gatherings, celebrations and quiet time with neighbors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="gallery-head reveal">
+      <div>
+        <p class="eyebrow">Gallery</p>
+        <h2>Designed to be lived in</h2>
+      </div>
+      <p>Durable, modern materials, clean lines and light-filled interiors across all three floors.</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <img src="https://i.postimg.cc/MZR51yTV/DWELL-3-floors-2.jpg" alt="Dwell Residences ground, first and second floor plans with exterior views">
+    </div>
+  </div>
+</section>
+
+<section class="finishes">
+  <div class="container finishes-grid">
+    <div class="reveal">
+      <p class="eyebrow">Finishes &amp; Fittings</p>
+      <h2 style="color:#fff;">Crafted in every detail</h2>
+      <p>From brushed brass hardware and warm wood doors to walk-in wardrobes and marble-look kitchens, every finish has been selected for durability and quiet elegance.</p>
+      <ul>
+        <li><span>Lighting</span><span>Warm brass accents</span></li>
+        <li><span>Doors &amp; Hardware</span><span>Solid wood, sculpted handles</span></li>
+        <li><span>Kitchen</span><span>Stone-look counters, pro-style fittings</span></li>
+        <li><span>Bathrooms</span><span>Concealed tapware, rain shower</span></li>
+        <li><span>Storage</span><span>Custom wardrobes</span></li>
+      </ul>
+    </div>
+    <div class="finishes-image reveal">
+      <img src="https://i.postimg.cc/RCfdwcFc/DWELL-3-floors-3.jpg" alt="Dwell Residences material and finishes mood board">
+    </div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="container location-grid">
+    <div class="reveal">
+      <img src="https://i.postimg.cc/T2m0nrwn/DWELL-3-floors-12.jpg" alt="Dwell Residences exterior at dusk" style="width:100%;height:460px;object-fit:cover;">
+    </div>
+    <div class="address-card reveal">
+      <p class="eyebrow">Location</p>
+      <h3>10 Obenesu Crescent</h3>
+      <p>Cantonments, Accra</p>
+      <p>One of Accra's most sought-after neighborhoods, close to the city's finest dining, schools and business districts.</p>
+      <p class="sub">Gated &middot; Secure &middot; Private</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="container reveal">
+    <p class="eyebrow" style="color:var(--gold-soft);">Limited Availability</p>
+    <h2>Make Dwell your home</h2>
+    <p>Speak with our team to arrange a private viewing and learn more about the homes available at Dwell Residences.</p>
+    <a href="mailto:info@sellingaccra.com?subject=Dwell%20Residences%20Enquiry" class="btn btn-gold">Book a Viewing</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <strong>Dwell Residences</strong>
+    <span>10 Obenesu Crescent, Cantonments, Accra</span>
+    <span>Selling Accra &middot; Premium Real Estate</span>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('top-bar');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
